@@ -6,14 +6,25 @@ import matplotlib as mpl
 import scipy.cluster.hierarchy as sch
 from matplotlib.colors import LinearSegmentedColormap
 from datetime import date
+import urllib.request
+import matplotlib.font_manager as fm
+import os
 
 # ==========================================
-# 🛠️ ตั้งค่าระบบและฟอนต์ภาษาไทย (แก้ปัญหาฟอนต์เต้าหู้)
+# 🛠️ ตั้งค่าระบบและฟอนต์ภาษาไทย (แก้ปัญหาฟอนต์เต้าหู้บน Cloud)
 # ==========================================
 st.set_page_config(page_title="GPF Portfolio Simulator", page_icon="📊", layout="wide")
 
-# เซ็ตฟอนต์สำหรับกราฟ Matplotlib ให้รองรับภาษาไทย (ใช้ Tahoma ซึ่งมีใน Windows ทุกเครื่อง)
-mpl.rcParams['font.family'] = 'Tahoma'
+# 1. โหลดฟอนต์ภาษาไทย 'Sarabun' จาก Google Fonts (ถ้ายังไม่มีในระบบ)
+font_url = "https://github.com/google/fonts/raw/main/ofl/sarabun/Sarabun-Regular.ttf"
+font_path = "Sarabun-Regular.ttf"
+
+if not os.path.exists(font_path):
+    urllib.request.urlretrieve(font_url, font_path)
+
+# 2. นำฟอนต์ไปติดตั้งใน Matplotlib
+fm.fontManager.addfont(font_path)
+mpl.rc('font', family='Sarabun')
 mpl.rcParams['axes.unicode_minus'] = False # ป้องกันเครื่องหมายลบเพี้ยน
 
 st.title("📊 ระบบจำลองและวิเคราะห์แผนการลงทุน กบข.")
@@ -394,4 +405,5 @@ else:
         progress_bar.progress(100)
 
         st.balloons()
+
 
