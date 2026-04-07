@@ -46,7 +46,7 @@ def load_data():
     for col in df.columns:
         df[col] = pd.to_numeric(df[col].astype(str).str.replace(',', ''), errors='coerce')
     
-    df.fillna(method='ffill', inplace=True)
+    df.ffill(inplace=True)
     returns = df.pct_change()
     
     # กำหนดกลุ่มกองทุนหลักที่ใช้ AI คำนวณ (ไม่รวมวายุภักษ์)
